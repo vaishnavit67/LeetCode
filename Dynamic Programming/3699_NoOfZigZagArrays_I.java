@@ -36,30 +36,74 @@ All arrays meet the ZigZag conditions.
 1 <= l < r <= 2000
  */
 
+/* 
+States:
+** Index
+** Direction
+*/
 
-// Solution
-class Solution {
-    public int zigZagArrays(int n, int l, int r) {
+// Optimized Solution
+class Solution2 {
+    
+    // Initial Approach
+    public int zigZagArrays1(int n, int l, int r){
+        int MOD = 1_000_000_007;
+        int m = r - l + 1;
+        if(m < 2 && n >= 3) return 0;
+
+        int dp[][] = new int[m][2];
+        for(int x = 0; x < m; x++){
+            dp[x][1] = x;
+            dp[x][0] = m - x -1;
+        }
+
+        for(int i = 3; i <= n; i++){
+            int nextDp[][] = new int[m][2];
+            
+            long runningSum = 0;
+            for(int x = 0; x < m; x++){
+                nextDp[x][1] = (int) runningSum;
+                runningSum = (runningSum + dp[x][0]) % MOD;
+            }
+
+            runningSum = 0;
+            for(int x = m-1; x >= 0; x--){
+                nextDp[x][0] = (int) runningSum;
+                runningSum = (runningSum + dp[x][1]) % MOD;
+            }
+
+            dp = nextDp;
+        }
+
+        int totalWays = 0;
+        for(int x = 0; x < m; x++){
+            totalWays = (totalWays + dp[x][0] + dp[x][1]) % MOD;
+        }
+        return totalWays;
+    }
+
+    // Optimized Solution
+    public int zigZagArrays2(int n, int l, int r) {
         int MOD = 1_000_000_007;
         int m = r - l + 1;
         if (m < 2 && n >= 3) return 0;
 
         int[] dp = new int[m];
-        java.util.Arrays.fill(dp, 1); // Tracks counts for sequence patterns
+        java.util.Arrays.fill(dp, 1); // for n = 1, you could choose any value once in the interval (l, r)
 
         // Alternating transition passes
         for (int i = 1; i < n; i++) {
-            int runningSum = 0;
-            if ((i & 1) == 1) { // Left-to-right calculation pass
-                for (int v = 0; v < m; v++) {
-                    int nextVal = (runningSum + dp[v]) % MOD;
-                    dp[v] = runningSum;
+            int runningSum = 0, nextVal;
+            if ((i & 1) == 1) { // Going Up
+                for (int x = 0; x < m; x++) {
+                    nextVal = (runningSum + dp[x]) % MOD;
+                    dp[x] = runningSum;
                     runningSum = nextVal;
                 }
-            } else { // Right-to-left calculation pass
-                for (int v = m - 1; v >= 0; v--) {
-                    int nextVal = (runningSum + dp[v]) % MOD;
-                    dp[v] = runningSum;
+            } else { // Going Down
+                for (int x = m - 1; x >= 0; x--) {
+                    nextVal = (runningSum + dp[x]) % MOD;
+                    dp[x] = runningSum;
                     runningSum = nextVal;
                 }
             }
@@ -69,6 +113,7 @@ class Solution {
         for (int v : dp) {
             totalWays = (totalWays + v) % MOD;
         }
-        return (int) (totalWays * 2 % MOD); // Symmetrical double mapping
+
+        return (int) (totalWays * 2 % MOD); // Double mapping as up and down form a mirror image
     }
 }
