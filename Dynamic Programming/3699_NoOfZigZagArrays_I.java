@@ -49,29 +49,36 @@ class Solution2 {
     public int zigZagArrays1(int n, int l, int r){
         int MOD = 1_000_000_007;
         int m = r - l + 1;
+        /*
+        Shift as [l, r] is similar to [0, r-l+1] as we don't need the values, just their range
+        - [4, 5, 4], [5, 4, 5]​ is similar to [0, 1, 0], [1, 0, 1]​​​​​ ​
+        */
         if(m < 2 && n >= 3) return 0;
 
-        int dp[][] = new int[m][2];
+        int dp[][] = new int[m][2]; // No of elements, UP and DOWN directions
         for(int x = 0; x < m; x++){
-            dp[x][1] = x;
-            dp[x][0] = m - x -1;
+            dp[x][1] = x; // No:of elements strinctly lesser than x
+            dp[x][0] = m - x -1; // No:of elements strictly greater than x
         }
 
         for(int i = 3; i <= n; i++){
             int nextDp[][] = new int[m][2];
             
             long runningSum = 0;
+            // Position UP - Moving DOWN
             for(int x = 0; x < m; x++){
                 nextDp[x][1] = (int) runningSum;
                 runningSum = (runningSum + dp[x][0]) % MOD;
             }
 
             runningSum = 0;
+            // Position DOWN - Moving UP
             for(int x = m-1; x >= 0; x--){
                 nextDp[x][0] = (int) runningSum;
                 runningSum = (runningSum + dp[x][1]) % MOD;
             }
 
+            // Assigning the updated prefix sum to original dp
             dp = nextDp;
         }
 
@@ -94,13 +101,13 @@ class Solution2 {
         // Alternating transition passes
         for (int i = 1; i < n; i++) {
             int runningSum = 0, nextVal;
-            if ((i & 1) == 1) { // Going Up
+            if ((i & 1) == 1) { // Going UP
                 for (int x = 0; x < m; x++) {
                     nextVal = (runningSum + dp[x]) % MOD;
                     dp[x] = runningSum;
                     runningSum = nextVal;
                 }
-            } else { // Going Down
+            } else { // Going DOWN
                 for (int x = m - 1; x >= 0; x--) {
                     nextVal = (runningSum + dp[x]) % MOD;
                     dp[x] = runningSum;
