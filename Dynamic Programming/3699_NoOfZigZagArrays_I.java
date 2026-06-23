@@ -42,7 +42,7 @@ States:
 ** Direction
 */
 
-// Optimized Solution
+// The Solution
 class Solution2 {
     
     // Initial Approach
