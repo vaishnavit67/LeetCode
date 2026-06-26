@@ -40,6 +40,7 @@ All arrays meet the ZigZag conditions.
 States:
 ** Index
 ** Direction
+** Value
 */
 
 // The Solution
