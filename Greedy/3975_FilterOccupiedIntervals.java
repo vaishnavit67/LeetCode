@@ -28,6 +28,17 @@ occupiedIntervals[i].length == 2
 1 <= freeStart <= freeEnd <= 109
 */
 
+// The Approach
+/*
+Initially, sort the intervals on the basis of start
+Merge the continuous intervals, if the next start is currend end+1 then you merge the intervals and add it into a Integer List array
+In the merge array you check if the interval does not occur in the free interval
+- If yes, you add it to the final result
+- If not
+    - You check if the start is less than the freeStart, the end can be anywhere - then you narrow down the interval to (start, freeStart-1) and add it to the result
+    - you check if the end is greater than the freeEnd, the start can be anywhere - then you narrow down the interval to (freeEnd+1, end) and add it to the result
+*/
+
 // The Solution
 class Solution {
     public List<List<Integer>> filterOccupiedIntervals(int[][] occupiedIntervals, int freeStart, int freeEnd) {
