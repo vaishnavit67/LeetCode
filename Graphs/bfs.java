@@ -1,6 +1,6 @@
 /*
 For BFS:
-Time Complexity - O(N + 2*E)
+Time Complexity - O(V + 2*E)
 Space Complexity - O(V + 2*E) {Visited array, Adjacency list}
 */
 

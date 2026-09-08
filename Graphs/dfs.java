@@ -1,9 +1,21 @@
 /*
-
+Time Complexity - O(V + 2*E)
+Space Complexity - O(2*E + V + N) {Adjacency list, visited array, Recursion}
 */
 
 import java.util.*;
 public class dfs {
+
+    static void dfsTraversal(int node, List<List<Integer>> list, boolean vis[]){
+        System.out.print(node + " ");
+        for(int v : list.get(node)){
+            if(!vis[v]){
+                vis[v] = true;
+                dfsTraversal(v, list, vis);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         
@@ -35,5 +47,12 @@ public class dfs {
             System.out.println();
         }
         System.out.println();
+
+        // DFS Traversal - check method dfstraversal() method
+        boolean vis[] = new boolean[n+1];
+        System.out.print("Enter the starting node (1 - n): ");
+        int start = sc.nextInt();
+        vis[start] = true;
+        dfsTraversal(start, list, vis);
     }
 }
