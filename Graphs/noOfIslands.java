@@ -1,3 +1,8 @@
+/*
+Time Complexity - O(N^2) {Matrix checking, bfs} 
+Space Complexity - O(N^2 + N^2) {visited array, Queue Space(if all - worst case)}
+*/
+
 import java.util.*;
 public class noOfIslands {
     static void traverse(int i, int j, boolean vis[][], int mat[][]){
@@ -18,7 +23,6 @@ public class noOfIslands {
                 traverse(ni, nj, vis, mat);
             }
         }
-
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
