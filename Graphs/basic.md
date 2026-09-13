@@ -6,3 +6,8 @@ Can be represented in 2 ways
 ## Traversal Techniques
 - Breadth First Search (BFS) - implemented using Queue data structure
 - Depth First Search (DFS) - implemented using recursion 
+
+## BFS-DFS Problems
+- Number of provinces
+- Rotten Oranges
+- Flood fill algorithm
