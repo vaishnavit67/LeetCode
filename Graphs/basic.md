@@ -11,3 +11,6 @@ Can be represented in 2 ways
 - Number of provinces
 - Rotten Oranges
 - Flood fill algorithm
+
+## Application of BFS-DFS
+- Cycle Detection
